@@ -5,6 +5,7 @@ export default {
     return {
       posts: [],
       newPostParams: {},
+      editPostParams: {},
       currentPost: {},
     };
   },
@@ -32,7 +33,19 @@ export default {
     },
     showPost: function (post) {
       this.currentPost = post;
+      this.editPostParams = post;
       document.querySelector("#post-details").showModal();
+    },
+    updatePost: function (post) {
+      axios
+        .patch("/posts/" + post.id, this.editPostParams)
+        .then((response) => {
+          console.log("posts update", response);
+          this.currentPost = {};
+        })
+        .catch((error) => {
+          console.log("posts update error", error.response);
+        });
     },
   },
 };
@@ -60,9 +73,19 @@ export default {
     <dialog id="post-details">
       <form method="dialog">
         <h1>Post info</h1>
-        <p>User: {{ currentPost.user }}</p>
-        <p>Image: {{ currentPost.image_url }}</p>
-        <p>Comment: {{ currentPost.comment }}</p>
+        <p>
+          User:
+          <input type="text" v-model="editPostParams.user" />
+        </p>
+        <p>
+          Image:
+          <input type="text" v-model="editPostParams.image_url" />
+        </p>
+        <p>
+          Comment:
+          <input type="text" v-model="editPostParams.comment" />
+        </p>
+        <button v-on:click="updatePost(currentPost)">Update</button>
         <button>Close</button>
       </form>
     </dialog>
