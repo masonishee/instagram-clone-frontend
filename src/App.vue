@@ -21,7 +21,7 @@ export default {
     },
     createPost: function () {
       axios
-        .post("/posts", this.newPostParams)
+        .post("/posts.json", this.newPostParams)
         .then((response) => {
           console.log("posts create", response);
           this.posts.push(response.data);
@@ -46,6 +46,13 @@ export default {
         .catch((error) => {
           console.log("posts update error", error.response);
         });
+    },
+    destroyPost: function (post) {
+      axios.delete("/posts/" + post.id + ".json").then((response) => {
+        console.log("posts destroy", response);
+        var index = this.posts.indexOf(post);
+        this.posts.splice(index, 1);
+      });
     },
   },
 };
@@ -86,6 +93,7 @@ export default {
           <input type="text" v-model="editPostParams.comment" />
         </p>
         <button v-on:click="updatePost(currentPost)">Update</button>
+        <button v-on:click="destroyPost(currentPost)">Destroy Post</button>
         <button>Close</button>
       </form>
     </dialog>
