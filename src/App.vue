@@ -59,7 +59,13 @@ export default {
 </script>
 
 <template>
-  <div class="home">
+  <header
+    class="fixed w-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg py-4 z-50 transition-transform duration-300"
+    :class="{ transform: isScrolled, '-translate-y-full': isScrolled }"
+  >
+    Home | All Posts
+  </header>
+  <div class="bg-gray-100 py-8">
     <h1>New Post</h1>
     <div>
       User:
@@ -68,14 +74,22 @@ export default {
       <input type="text" v-model="newPostParams.image_url" />
       Comment:
       <input type="text" v-model="newPostParams.comment" />
-      <button v-on:click="createPost()">Create Post</button>
+      <button v-on:click="createPost()" class="rounded border border-gray-300 p-2 hover:bg-gray-100">
+        Create Post
+      </button>
     </div>
-    <h1>All Posts</h1>
-    <div v-for="post in posts" v-bind:key="post.id">
+    <h1 class="text-3xl font-semibold mb-8">All Posts</h1>
+    <div
+      v-for="post in posts"
+      v-bind:key="post.id"
+      class="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+    >
       <h2>{{ post.user }}</h2>
       <img v-bind:src="post.image_url" v-bind:alt="post.user" />
-      <p>Comment {{ post.comment }}</p>
-      <button v-on:click="showPost(post)">More info</button>
+      <p>Comment: {{ post.comment }}</p>
+      <button v-on:click="showPost(post)" class="rounded border border-gray-300 p-2 hover:bg-gray-100">
+        More info
+      </button>
     </div>
     <dialog id="post-details">
       <form method="dialog">
@@ -92,12 +106,19 @@ export default {
           Comment:
           <input type="text" v-model="editPostParams.comment" />
         </p>
-        <button v-on:click="updatePost(currentPost)">Update</button>
-        <button v-on:click="destroyPost(currentPost)">Destroy Post</button>
-        <button>Close</button>
+        <button v-on:click="updatePost(currentPost)" class="rounded border border-gray-300 p-2 hover:bg-gray-100">
+          Update
+        </button>
+        <button v-on:click="destroyPost(currentPost)" class="rounded border border-gray-300 p-2 hover:bg-gray-100">
+          Destroy Post
+        </button>
+        <button class="rounded border border-gray-300 p-2 hover:bg-gray-100">Close</button>
       </form>
     </dialog>
   </div>
+  <footer class="text-center bg-gradient-to-r from-blue-500 to-purple-500 text-white py-12 relative">
+    Copyright ARRAY TO REMEMBER 2023
+  </footer>
 </template>
 
 <style></style>
