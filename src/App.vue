@@ -60,7 +60,7 @@ export default {
 
 <template>
   <header class="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-12 relative">Home | All Posts</header>
-  <div class="home">
+  <div class="bg-gray-100 py-8">
     <h1>New Post</h1>
     <div>
       User:
@@ -73,7 +73,7 @@ export default {
         Create Post
       </button>
     </div>
-    <h1>All Posts</h1>
+    <h1 class="text-3xl font-semibold mb-8">All Posts</h1>
     <div v-for="post in posts" v-bind:key="post.id">
       <h2>{{ post.user }}</h2>
       <img v-bind:src="post.image_url" v-bind:alt="post.user" />
